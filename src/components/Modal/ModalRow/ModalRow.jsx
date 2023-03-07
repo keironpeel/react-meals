@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { menuItems } from "../../../data";
+import BasketContext from "../../../store/basket-context";
 
 const ModalRow = ({ id, amount }) => {
   const determineItem = () => {
@@ -17,6 +19,16 @@ const ModalRow = ({ id, amount }) => {
 
   const cost = itemCostString(item.cost, amount);
 
+  const basketContext = useContext(BasketContext);
+
+  const handleIncrement = () => {
+    basketContext.addItems(1, id);
+  };
+
+  const handleDecrement = () => {
+    basketContext.removeItems(1, id);
+  };
+
   return (
     <div className="flex items-center justify-between border-b py-6 first-of-type:pt-0">
       <div>
@@ -29,10 +41,16 @@ const ModalRow = ({ id, amount }) => {
         </div>
       </div>
       <div className="flex gap-2">
-        <button className="rounded-full border-2 border-red-900 py-1 px-6 font-bold text-red-900">
+        <button
+          className="rounded-full border-2 border-red-900 py-1 px-6 font-bold text-red-900"
+          onClick={handleDecrement}
+        >
           -
         </button>
-        <button className="rounded-full border-2 border-red-900 py-1 px-6 font-bold text-red-900">
+        <button
+          className="rounded-full border-2 border-red-900 py-1 px-6 font-bold text-red-900"
+          onClick={handleIncrement}
+        >
           +
         </button>
       </div>
